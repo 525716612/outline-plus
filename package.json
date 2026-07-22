@@ -1,0 +1,60 @@
+{
+  "name": "c-outline-map",
+  "displayName": "C OUTLINE MAP",
+  "description": "Enhanced C/C++ outline view with search and keyboard navigation",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.125.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onView:c-outline-map.outlineView"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "c-outline-map.refresh",
+        "title": "Outline Map: Refresh"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "outline-map",
+          "title": "Outline Map",
+          "icon": "$(list-tree)"
+        }
+      ]
+    },
+    "views": {
+      "outline-map": [
+        {
+          "type": "webview",
+          "id": "c-outline-map.outlineView",
+          "name": "Outline Map"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src"
+  },
+  "devDependencies": {
+    "@types/node": "22.x",
+    "@types/vscode": "^1.125.0",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^9.39.3",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.56.1"
+  },
+  "dependencies": {
+    "@vscode/codicons": "^0.0.45"
+  }
+}
