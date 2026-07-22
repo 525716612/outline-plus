@@ -50,16 +50,19 @@ function getCSS(codiconUri: string): string {
 			font-size: var(--vscode-font-size);
 			color: var(--vscode-foreground);
 			background: var(--vscode-sideBar-background);
-			padding: 8px;
+			padding: 4px 0 0 0;
 			outline: none;
+			height: 100vh;
+			display: flex;
+			flex-direction: column;
 		}
 		.search-box {
 			position: sticky; top: 0; z-index: 10;
 			background: var(--vscode-sideBar-background);
-			padding-bottom: 8px; display: flex; gap: 4px;
+			padding: 0 4px 8px 4px; display: flex; gap: 4px;
 		}
 		.search-input {
-			flex: 1; padding: 4px 8px;
+			flex: 1; padding: 3px 8px;
 			border: 1px solid var(--vscode-input-border, transparent);
 			background: var(--vscode-input-background);
 			color: var(--vscode-input-foreground);
@@ -82,7 +85,7 @@ function getCSS(codiconUri: string): string {
 			color: var(--vscode-inputOption-activeForeground);
 			border-color: var(--vscode-inputOption-activeBorder);
 		}
-		.outline-list { overflow-y: auto; max-height: calc(100vh - 60px); outline: none; }
+		.outline-list { overflow-y: auto; flex: 1; outline: none; }
 		.outline-list:focus .outline-item.selected { border-left: 2px solid var(--vscode-focusBorder); }
 		.outline-item {
 			display: flex; align-items: center; padding: 2px 4px;

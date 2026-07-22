@@ -24,6 +24,9 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 	context.subscriptions.push(focusSearchCmd);
 
+	// 激活时自动显示侧边栏
+	vscode.commands.executeCommand('workbench.view.extension.outline-map');
+
 	// 文档内容变化时自动刷新（编辑器切换已在 Provider 内部处理）
 	context.subscriptions.push(
 		vscode.workspace.onDidChangeTextDocument(() => {
