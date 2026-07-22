@@ -126,6 +126,12 @@ export class OutlineViewProvider implements vscode.WebviewViewProvider {
 		await this._refreshOutline();
 	}
 
+	public focusSearch(): void {
+		if (this._view) {
+			this._view.webview.postMessage({ type: 'focusSearch' });
+		}
+	}
+
 	private _debouncedRefresh(): void {
 		if (this._debounceTimer !== undefined) {
 			clearTimeout(this._debounceTimer);

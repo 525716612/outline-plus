@@ -20,6 +20,13 @@
         "title": "Outline Map: Refresh"
       }
     ],
+    "keybindings": [
+      {
+        "command": "c-outline-map.focusSearch",
+        "key": "alt+l",
+        "when": "view == c-outline-map.outlineView"
+      }
+    ],
     "viewsContainers": {
       "activitybar": [
         {

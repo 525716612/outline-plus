@@ -18,6 +18,12 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 	context.subscriptions.push(refreshCmd);
 
+	// 注册搜索框聚焦命令（支持 Alt+L 快捷键）
+	const focusSearchCmd = vscode.commands.registerCommand('c-outline-map.focusSearch', () => {
+		outlineProvider.focusSearch();
+	});
+	context.subscriptions.push(focusSearchCmd);
+
 	// 文档内容变化时自动刷新（编辑器切换已在 Provider 内部处理）
 	context.subscriptions.push(
 		vscode.workspace.onDidChangeTextDocument(() => {

@@ -456,6 +456,13 @@ function getJS(): string {
 			});
 
 			document.addEventListener('keydown', function(e) {
+				// Alt+L 聚焦到搜索框
+				if (e.altKey && e.key.toLowerCase() === 'l') {
+					e.preventDefault();
+					searchInput.focus();
+					searchInput.select();
+					return;
+				}
 				if (shortcutMode && e.target !== searchInput) {
 					var key = e.key.toLowerCase();
 					if (SHORTCUT_KEYS.indexOf(key) !== -1) {
@@ -526,6 +533,10 @@ function getJS(): string {
 					case 'editorClicked':
 						searchInput.value = ''; exitShortcutMode(); filterItems('');
 						previewIndex = -1; render(); break;
+					case 'focusSearch':
+						searchInput.focus();
+						searchInput.select();
+						break;
 				}
 			});
 
