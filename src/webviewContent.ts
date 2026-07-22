@@ -459,13 +459,6 @@ function getJS(): string {
 			});
 
 			document.addEventListener('keydown', function(e) {
-				// Alt+L 聚焦到搜索框
-				if (e.altKey && e.key.toLowerCase() === 'l') {
-					e.preventDefault();
-					searchInput.focus();
-					searchInput.select();
-					return;
-				}
 				if (shortcutMode && e.target !== searchInput) {
 					var key = e.key.toLowerCase();
 					if (SHORTCUT_KEYS.indexOf(key) !== -1) {
