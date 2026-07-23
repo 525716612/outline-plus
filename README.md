@@ -1,65 +1,66 @@
 # C Outline Map
 
-<p align="right">
-  <a href="README.zh-CN.md">中文</a>
+<p align="center">
+  <a href="README.en.md"><img src="https://img.shields.io/badge/lang-en-blue.svg" alt="English"></a>
+  <a href="README.md"><img src="https://img.shields.io/badge/lang-zh--cn-red.svg" alt="中文"></a>
 </p>
 
-An enhanced VS Code outline view with search, keyboard navigation, shortcut jumping and real-time cursor tracking.
+增强的 VS Code 大纲视图，提供搜索过滤、键盘导航、快捷键跳转和光标实时跟踪功能。
 
-## Features
+## 功能特性
 
-### 📋 Enhanced Outline List
-- Retrieves symbols from VS Code's language server — works with all languages
-- Uses Codicon icons matching VS Code's built-in outline
-- Recursively flattened display with indentation for hierarchy
-- Automatically waits for the language server to start
+### 📋 增强大纲列表
+- 从 VS Code 语言服务器获取符号数据，支持所有语言
+- 使用 Codicon 图标，与 VS Code 内置大纲完全一致的符号类型标识
+- 递归展平显示，缩进表示层级关系
+- 自动等待语言服务器启动后再加载数据
 
-### 🔍 Search & Filter
-- Real-time filtering: type to search, instantly locate symbols
-- Case-sensitive toggle (`Aa` button)
-- Fuzzy search toggle (`.*` button) — characters match in sequence
-- Preview cursor auto-points to the first result after searching
+### 🔍 搜索过滤
+- 实时过滤：输入即搜，快速定位符号
+- 区分大小写切换（`Aa` 按钮）
+- 模糊搜索切换（`.*` 按钮）— 字符按顺序匹配即可
+- 搜索后预览光标自动指向第一项
 
-### ⌨️ Keyboard Navigation
-| Shortcut | Action |
-|----------|--------|
-| `↑/↓` | Move preview cursor, editor jumps synchronously |
-| `Enter` | Confirm jump to preview position |
-| `Enter` in search box | Enter shortcut mode — each item shows a number label |
-| `1-9` `a-z` in shortcut mode | Jump directly to the corresponding item |
+### ⌨️ 键盘导航
+| 快捷键 | 功能 |
+|--------|------|
+| `↑/↓` | 上下移动预览光标，编辑器实时同步跳转 |
+| `Enter` | 确认跳转到预览位置 |
+| 搜索框中 `Enter` | 进入快捷键模式，每项显示序号标签 |
+| 快捷键模式下按 `1-9` `a-z` | 直接跳转到对应选项 |
 
-### 🎯 Editor Sync
-- Outline auto-tracks and highlights the corresponding symbol as cursor moves
-- Click an outline item to jump to editor and select the symbol name
-- Three selection states:
-  - 🔵 **Focused** (blue): when outline has focus
-  - ⚪ **Unfocused** (gray): when editor has focus
-  - 📌 **Preview** (left border): during arrow key navigation
+### 🎯 编辑器同步
+- 光标移动时，大纲自动跟踪并高亮对应符号
+- 点击大纲项跳转到编辑器并选中符号名称
+- 三种选中状态：
+  - 🔵 **聚焦选中**（蓝色）：大纲有焦点时
+  - ⚪ **非聚焦选中**（灰色）：编辑器有焦点时
+  - 📌 **预览**（左边框）：方向键导航中
 
-### ⚡ Quick Actions
-- `Alt+L` — Focus the search box
+### ⚡ 快捷操作
+- `Alt+L` — 聚焦到搜索框
 
-## Usage
+## 使用方法
 
-1. Click the **Outline Map** icon in the activity bar
-2. Open any code file — the sidebar shows file symbols
-3. Use the search box to filter, arrow keys to navigate, Enter to jump
+1. 安装扩展后，点击活动栏的 **Outline Map** 图标
+2. 打开任意代码文件，侧边栏自动显示文件符号
+3. 使用搜索框过滤符号，方向键导航，Enter 确认跳转
 
-## Requirements
+## 要求
 
 - VS Code ^1.125.0
 
-## Known Issues
+## 已知问题
 
-- On first file open, outline data waits for the language server to be ready — a brief delay may occur
+- 首次打开文件时，大纲数据需要等待语言服务器就绪，可能会有短暂延迟
 
-## Release Notes
+## 发布说明
 
 ### 1.0.0
 
-Initial release:
-- Enhanced outline view
-- Search & filter (case-sensitive, fuzzy match)
-- Arrow key navigation and shortcut jumping
-- Real-time editor cursor tracking
-- Three selection states (focused / unfocused / preview)
+初始发布：
+- 增强的大纲视图
+- 搜索过滤（支持区分大小写和模糊匹配）
+- 方向键导航和快捷键跳转
+- 编辑器光标实时跟踪
+- 三种选中状态（聚焦/非聚焦/预览）
