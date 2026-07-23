@@ -1,4 +1,4 @@
-# C Outline Map
+# Outline Plus
 
 <p align="center">
   <a href="README.en.md"><img src="https://img.shields.io/badge/lang-en-blue.svg" alt="English"></a>
@@ -42,7 +42,7 @@
 
 ## 使用方法
 
-1. 安装扩展后，点击活动栏的 **Outline Map** 图标
+1. 安装扩展后，点击活动栏的 **Outline Plus** 图标
 2. 打开任意代码文件，侧边栏自动显示文件符号
 3. 使用搜索框过滤符号，方向键导航，Enter 确认跳转
 

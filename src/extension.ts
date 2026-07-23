@@ -13,13 +13,13 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(viewRegistration);
 
 	// Register refresh command
-	const refreshCmd = vscode.commands.registerCommand('c-outline-map.refresh', () => {
+	const refreshCmd = vscode.commands.registerCommand('outline-plus.refresh', () => {
 		outlineProvider.refresh();
 	});
 	context.subscriptions.push(refreshCmd);
 
 	// 注册搜索框聚焦命令（支持 Alt+L 快捷键）
-	const focusSearchCmd = vscode.commands.registerCommand('c-outline-map.focusSearch', () => {
+	const focusSearchCmd = vscode.commands.registerCommand('outline-plus.focusSearch', () => {
 		outlineProvider.focusSearch();
 	});
 	context.subscriptions.push(focusSearchCmd);

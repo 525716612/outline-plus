@@ -1,13 +1,13 @@
 {
-  "name": "c-outline-map",
-  "displayName": "C Outline Map",
+  "name": "outline-plus",
+  "displayName": "Outline Plus",
   "description": "增强的大纲视图：搜索过滤、键盘导航、快捷键跳转、光标实时跟踪",
   "version": "1.0.0",
   "publisher": "your-publisher-name",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/c-outline-map"
+    "url": "https://github.com/your-username/outline-plus"
   },
   "engines": {
     "vscode": "^1.125.0"
@@ -29,24 +29,24 @@
   "qna": "marketplace",
   "icon": "media/icon.png",
   "activationEvents": [
-    "onView:c-outline-map.outlineView",
-    "onCommand:c-outline-map.focusSearch"
+    "onView:outline-plus.outlineView",
+    "onCommand:outline-plus.focusSearch"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "c-outline-map.refresh",
-        "title": "C Outline Map: Refresh"
+        "command": "outline-plus.refresh",
+        "title": "Outline Plus: Refresh"
       },
       {
-        "command": "c-outline-map.focusSearch",
-        "title": "C Outline Map: Focus Search"
+        "command": "outline-plus.focusSearch",
+        "title": "Outline Plus: Focus Search"
       }
     ],
     "keybindings": [
       {
-        "command": "c-outline-map.focusSearch",
+        "command": "outline-plus.focusSearch",
         "key": "alt+l"
       }
     ],
@@ -54,7 +54,7 @@
       "activitybar": [
         {
           "id": "outline-map",
-          "title": "Outline Map",
+          "title": "Outline Plus",
           "icon": "$(list-tree)"
         }
       ]
@@ -63,8 +63,8 @@
       "outline-map": [
         {
           "type": "webview",
-          "id": "c-outline-map.outlineView",
-          "name": "Outline Map"
+          "id": "outline-plus.outlineView",
+          "name": "Outline Plus"
         }
       ]
     }

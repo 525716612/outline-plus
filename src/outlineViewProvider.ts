@@ -3,7 +3,7 @@ import { OutlineItem } from './types';
 import { getWebviewContent } from './webviewContent';
 
 export class OutlineViewProvider implements vscode.WebviewViewProvider {
-	public static readonly viewType = 'c-outline-map.outlineView';
+	public static readonly viewType = 'outline-plus.outlineView';
 	private _view?: vscode.WebviewView;
 	private _outlineItems: OutlineItem[] = [];
 	private _disposed = false;

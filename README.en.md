@@ -1,4 +1,4 @@
-# C Outline Map
+# Outline Plus
 
 <p align="center">
   <a href="README.en.md"><img src="https://img.shields.io/badge/lang-en-blue.svg" alt="English"></a>
@@ -42,7 +42,7 @@ An enhanced VS Code outline view with search, keyboard navigation, shortcut jump
 
 ## Usage
 
-1. Click the **Outline Map** icon in the activity bar
+1. Click the **Outline Plus** icon in the activity bar
 2. Open any code file — the sidebar shows file symbols
 3. Use the search box to filter, arrow keys to navigate, Enter to jump
 
