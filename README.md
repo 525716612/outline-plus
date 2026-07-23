@@ -1,9 +1,6 @@
 # Outline Plus
 
-<p align="center">
-  <a href="README.en.md"><img src="https://img.shields.io/badge/lang-en-blue.svg" alt="English"></a>
-  <a href="README.md"><img src="https://img.shields.io/badge/lang-zh--cn-red.svg" alt="中文"></a>
-</p>
+**中文** | [English](README.en.md)
 
 增强的 VS Code 大纲视图，提供搜索过滤、键盘导航、快捷键跳转和光标实时跟踪功能。
 

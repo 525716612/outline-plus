@@ -1,9 +1,6 @@
 # Outline Plus
 
-<p align="center">
-  <a href="README.en.md"><img src="https://img.shields.io/badge/lang-en-blue.svg" alt="English"></a>
-  <a href="README.md"><img src="https://img.shields.io/badge/lang-zh--cn-red.svg" alt="中文"></a>
-</p>
+[中文](README.md) | **English**
 
 An enhanced VS Code outline view with search, keyboard navigation, shortcut jumping and real-time cursor tracking.
 
