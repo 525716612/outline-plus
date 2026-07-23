@@ -27,7 +27,6 @@
     "c/c++"
   ],
   "qna": "marketplace",
-  "icon": "media/icon.png",
   "activationEvents": [
     "onView:outline-plus.outlineView",
     "onCommand:outline-plus.focusSearch"
@@ -80,13 +79,11 @@
   "devDependencies": {
     "@types/node": "22.x",
     "@types/vscode": "^1.125.0",
+    "@vscode/codicons": "^0.0.45",
     "@vscode/test-cli": "^0.0.12",
     "@vscode/test-electron": "^2.5.2",
     "eslint": "^9.39.3",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.56.1"
-  },
-  "dependencies": {
-    "@vscode/codicons": "^0.0.45"
   }
 }
