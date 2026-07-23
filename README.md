@@ -1,5 +1,9 @@
 # C Outline Map
 
+<p align="right">
+  <a href="README.zh-CN.md">中文</a>
+</p>
+
 An enhanced VS Code outline view with search, keyboard navigation, shortcut jumping and real-time cursor tracking.
 
 ## Features

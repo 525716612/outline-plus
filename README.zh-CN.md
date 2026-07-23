@@ -1,5 +1,9 @@
 # C Outline Map
 
+<p align="right">
+  <a href="README.md">English</a>
+</p>
+
 增强的 VS Code 大纲视图，提供搜索过滤、键盘导航、快捷键跳转和光标实时跟踪功能。
 
 ## 功能特性
