@@ -244,11 +244,14 @@ export class OutlineViewProvider implements vscode.WebviewViewProvider {
 	}
 
 	private async _selectItem(line: number, uri: string, nameLine?: number, nameStartChar?: number, nameEndChar?: number): Promise<void> {
-		this._skipNextSelectionChange = true;
-		this._skipEditorClicked = true;
 		const documentUri = vscode.Uri.parse(uri);
 		const doc = await vscode.workspace.openTextDocument(documentUri);
 		const editor = await vscode.window.showTextDocument(doc, { preserveFocus: true });
+
+		// 设置 skip 标志放在 showTextDocument 之后，避免在 await 期间被其他事件消费
+		this._skipNextSelectionChange = true;
+		this._skipEditorClicked = true;
+
 		if (nameLine !== undefined && nameStartChar !== undefined && nameEndChar !== undefined) {
 			const start = new vscode.Position(nameLine, nameStartChar);
 			const end = new vscode.Position(nameLine, nameEndChar);

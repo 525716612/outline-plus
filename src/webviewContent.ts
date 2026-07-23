@@ -269,6 +269,8 @@ function getJS(): string {
 				if (previewIndex < 0 || previewIndex >= flat.length) return;
 				selectedIndex = previewIndex;
 				var item = flat[previewIndex];
+				// 同步更新 lastCursorLine，防止后续 update 消息用旧位置重置大纲选中项
+				lastCursorLine = item.line;
 				vscode.postMessage({
 					type: 'select', line: item.line, uri: item.uri,
 					nameLine: item.nameLine, nameStartChar: item.nameStartChar, nameEndChar: item.nameEndChar
