@@ -26,9 +26,9 @@ export function getWebviewContent(webview: vscode.Webview, extensionUri: vscode.
 </head>
 <body>
 	<div class="search-box">
-		<input type="text" class="search-input" id="searchInput" placeholder="Search outline..." />
-		<button class="search-toggle" id="toggleCase" title="Case Sensitive">Aa</button>
-		<button class="search-toggle" id="toggleFuzzy" title="Fuzzy Match">.*</button>
+		<input type="text" class="search-input" id="searchInput" placeholder="搜索大纲..." data-shortcut="Alt+L" />
+		<button class="search-toggle" id="toggleCase" title="区分大小写">Aa</button>
+		<button class="search-toggle" id="toggleFuzzy" title="模糊匹配">.*</button>
 	</div>
 	<div class="outline-list" id="outlineList" tabindex="0"></div>
 	<script nonce="${nonce}">${getJS()}</script>
@@ -217,7 +217,7 @@ function getJS(): string {
 				// 保存滚动位置和焦点，防止 innerHTML 替换导致跳动
 				var oldScrollTop = outlineList.scrollTop;
 				if (flat.length === 0) {
-					outlineList.innerHTML = '<div class="empty-state">No symbols found</div>';
+					outlineList.innerHTML = '<div class="empty-state">未找到符号</div>';
 					outlineList.scrollTop = 0;
 					return;
 				}
@@ -411,6 +411,9 @@ function getJS(): string {
 					previewIndex = 0;
 					selectedIndex = -1;
 				} else {
+					previewIndex = -1;
+					selectedIndex = -1;
+					render();
 					vscode.postMessage({ type: 'getCursorLine' });
 					return;
 				}
@@ -534,6 +537,9 @@ function getJS(): string {
 					case 'focusSearch':
 						searchInput.focus();
 						searchInput.select();
+						break;
+					case 'keybindingChanged':
+						searchInput.placeholder = '搜索大纲 (' + message.keybinding + ')';
 						break;
 				}
 			});

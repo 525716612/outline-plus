@@ -2,6 +2,8 @@ import * as vscode from 'vscode';
 import { OutlineItem } from './types';
 import { getWebviewContent } from './webviewContent';
 
+const FOCUS_SEARCH_COMMAND = 'outline-plus.focusSearch';
+
 export class OutlineViewProvider implements vscode.WebviewViewProvider {
 	public static readonly viewType = 'outline-plus.outlineView';
 	private _view?: vscode.WebviewView;
@@ -18,8 +20,49 @@ export class OutlineViewProvider implements vscode.WebviewViewProvider {
 	private _skipEditorClicked = false;
 	private static readonly FALLBACK_MAX_RETRIES = 20;
 	private static readonly FALLBACK_INTERVAL = 500;
+	private static readonly DEFAULT_KEYBINDING = 'Alt+L';
 
 	constructor(private readonly _extensionUri: vscode.Uri) {}
+
+	/**
+	 * 读取当前命令的快捷键显示文本（如 "Alt+L"）
+	 */
+	private _getKeybindingLabel(): string {
+		try {
+			const allBindings: any[] = vscode.workspace.getConfiguration().get('keybindings') ?? [];
+			for (const binding of allBindings) {
+				if (binding.command === FOCUS_SEARCH_COMMAND && binding.key) {
+					return this._formatKeybinding(binding.key);
+				}
+			}
+		} catch { /* ignore */ }
+
+		// 回退到 package.json 中的默认值
+		return OutlineViewProvider.DEFAULT_KEYBINDING;
+	}
+
+	/**
+	 * 将 VS Code 快捷键格式转为用户可读格式，如 "alt+l" → "Alt+L"
+	 */
+	private _formatKeybinding(key: string): string {
+		return key
+			.split('+')
+			.map(part => {
+				const lower = part.toLowerCase();
+				if (lower === 'alt') return 'Alt';
+				if (lower === 'ctrl' || lower === 'control') return 'Ctrl';
+				if (lower === 'shift') return 'Shift';
+				if (lower === 'cmd' || lower === 'meta' || lower === 'win') return 'Cmd';
+				if (lower === 'escape') return 'Esc';
+				if (lower === 'enter' || lower === 'return') return 'Enter';
+				if (lower === 'space') return 'Space';
+				if (lower === 'tab') return 'Tab';
+				if (lower.startsWith('f') && /^f\d{1,2}$/.test(lower)) return part.toUpperCase(); // F1-F24
+				if (lower.length === 1) return part.toUpperCase();
+				return part;
+			})
+			.join('+');
+	}
 
 	public resolveWebviewView(
 		webviewView: vscode.WebviewView,
@@ -32,6 +75,18 @@ export class OutlineViewProvider implements vscode.WebviewViewProvider {
 			localResourceRoots: [this._extensionUri]
 		};
 		webviewView.webview.html = getWebviewContent(webviewView.webview, this._extensionUri);
+
+		// 发送当前快捷键到 webview
+		this._sendKeybinding();
+
+		// 监听快捷键配置变化，同步到 webview
+		this._subscriptions.push(
+			vscode.workspace.onDidChangeConfiguration((e) => {
+				if (e.affectsConfiguration('keybindings')) {
+					this._sendKeybinding();
+				}
+			})
+		);
 
 		webviewView.webview.onDidReceiveMessage(
 			async (message) => {
@@ -267,6 +322,15 @@ export class OutlineViewProvider implements vscode.WebviewViewProvider {
 	private _sendOutline(items: OutlineItem[]): void {
 		if (this._view) {
 			this._view.webview.postMessage({ type: 'update', items });
+		}
+	}
+
+	private _sendKeybinding(): void {
+		if (this._view) {
+			this._view.webview.postMessage({
+				type: 'keybindingChanged',
+				keybinding: this._getKeybindingLabel()
+			});
 		}
 	}
 
