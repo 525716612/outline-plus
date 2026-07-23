@@ -1,71 +1,61 @@
-# c-outline-map README
+# C Outline Map
 
-This is the README for your extension "c-outline-map". After writing up a brief description, we recommend including the following sections.
+增强的 VS Code 大纲视图，提供搜索过滤、键盘导航、快捷键跳转和光标实时跟踪功能。
 
-## Features
+## 功能
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+### 📋 增强大纲列表
+- 从 VS Code 语言服务器获取符号数据，支持所有语言
+- 使用 Codicon 图标，与 VS Code 内置大纲完全一致的符号类型标识
+- 递归展平显示，缩进表示层级关系
+- 自动等待语言服务器启动后再加载数据
 
-For example if there is an image subfolder under your extension project workspace:
+### 🔍 搜索过滤
+- 实时过滤：输入即搜，快速定位符号
+- 区分大小写切换 (`Aa` 按钮)
+- 模糊搜索切换 (`.*` 按钮) — 字符按顺序匹配即可
+- 搜索后预览光标自动指向第一项
 
-\!\[feature X\]\(images/feature-x.png\)
+### ⌨️ 键盘导航
+| 快捷键 | 功能 |
+|--------|------|
+| `↑/↓` | 上下移动预览光标，编辑器实时同步跳转 |
+| `Enter` | 确认跳转到预览位置 |
+| 搜索框中 `Enter` | 进入快捷键模式，每项显示序号标签 |
+| 快捷键模式下按 `1-9` `a-z` | 直接跳转到对应选项 |
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+### 🎯 编辑器同步
+- 光标移动时，大纲自动跟踪并高亮对应符号
+- 点击大纲项跳转到编辑器并选中符号名称
+- 三种选中状态：
+  - 🔵 **聚焦选中**（蓝色）：大纲有焦点时
+  - ⚪ **非聚焦选中**（灰色）：编辑器有焦点时
+  - 📌 **预览**（左边框）：方向键导航中
 
-## Requirements
+### ⚡ 快捷操作
+- `Alt+L` — 聚焦到搜索框
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+## 使用
 
-## Extension Settings
+1. 安装扩展后，点击活动栏的 **Outline Map** 图标
+2. 打开任意代码文件，侧边栏自动显示文件符号
+3. 使用搜索框过滤符号，方向键导航，Enter 确认跳转
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+## 要求
 
-For example:
+- VS Code ^1.125.0
 
-This extension contributes the following settings:
+## 已知问题
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+- 首次打开文件时，大纲数据需要等待语言服务器就绪，可能会有短暂延迟
 
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
+## 发布说明
 
 ### 1.0.0
 
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+初始发布：
+- 增强的大纲视图
+- 搜索过滤（支持区分大小写和模糊匹配）
+- 方向键导航和快捷键跳转
+- 编辑器光标实时跟踪
+- 三种选中状态（聚焦/非聚焦/预览）

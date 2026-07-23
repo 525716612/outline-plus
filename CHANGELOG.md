@@ -1,9 +1,14 @@
 # Change Log
 
-All notable changes to the "c-outline-map" extension will be documented in this file.
+## [1.0.0] - 2026-07-23
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
-
-## [Unreleased]
-
-- Initial release
+### 新增
+- 增强的大纲视图，从 VS Code 语言服务器获取符号数据
+- 搜索过滤功能，支持区分大小写和模糊匹配
+- 方向键上下导航，编辑器实时同步跳转
+- 快捷键模式（Enter 显示序号，按序号跳转）
+- Alt+L 聚焦搜索框
+- 编辑器光标实时跟踪，自动高亮对应符号
+- 三种选中状态：聚焦蓝色 / 非聚焦灰色 / 预览边框
+- Codicon 图标，与 VS Code 内置大纲一致
+- 自动等待语言服务器启动

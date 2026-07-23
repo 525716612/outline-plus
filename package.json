@@ -1,14 +1,33 @@
 {
   "name": "c-outline-map",
-  "displayName": "C OUTLINE MAP",
-  "description": "Enhanced C/C++ outline view with search and keyboard navigation",
-  "version": "0.0.1",
+  "displayName": "C Outline Map",
+  "description": "增强的大纲视图：搜索过滤、键盘导航、快捷键跳转、光标实时跟踪",
+  "version": "1.0.0",
+  "publisher": "your-publisher-name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/c-outline-map"
+  },
   "engines": {
     "vscode": "^1.125.0"
   },
   "categories": [
+    "Programming Languages",
+    "Visualization",
     "Other"
   ],
+  "keywords": [
+    "outline",
+    "symbol",
+    "navigation",
+    "c",
+    "cpp",
+    "c++",
+    "c/c++"
+  ],
+  "qna": "marketplace",
+  "icon": "media/icon.png",
   "activationEvents": [
     "onView:c-outline-map.outlineView",
     "onCommand:c-outline-map.focusSearch"
@@ -18,11 +37,11 @@
     "commands": [
       {
         "command": "c-outline-map.refresh",
-        "title": "Outline Map: Refresh"
+        "title": "C Outline Map: Refresh"
       },
       {
         "command": "c-outline-map.focusSearch",
-        "title": "Outline Map: Focus Search"
+        "title": "C Outline Map: Focus Search"
       }
     ],
     "keybindings": [
@@ -54,7 +73,9 @@
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "package": "npx @vscode/vsce package",
+    "publish": "npx @vscode/vsce publish"
   },
   "devDependencies": {
     "@types/node": "22.x",
