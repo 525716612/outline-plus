@@ -123,6 +123,7 @@ export class OutlineViewProvider implements vscode.WebviewViewProvider {
 		webviewView.onDidChangeVisibility(() => {
 			if (webviewView.visible) {
 				this._refreshOutline();
+				this._sendCursorLine();
 			}
 		}, undefined, this._subscriptions);
 
