@@ -141,9 +141,9 @@ function getJS(): string {
 			const outlineList = document.getElementById('outlineList');
 			let allItems = [];
 			let filteredItems = [];
+			let flatItems = [];
 			let previewIndex = -1;
 			let selectedIndex = -1;
-			let isListFocused = false;
 			function isOutlineFocused() {
 				return document.activeElement === outlineList || outlineList.contains(document.activeElement);
 			}
@@ -213,17 +213,16 @@ function getJS(): string {
 			}
 
 			function render() {
-				var flat = flattenItems(filteredItems);
 				// 保存滚动位置和焦点，防止 innerHTML 替换导致跳动
 				var oldScrollTop = outlineList.scrollTop;
-				if (flat.length === 0) {
+				if (flatItems.length === 0) {
 					outlineList.innerHTML = '<div class="empty-state">未找到符号</div>';
 					outlineList.scrollTop = 0;
 					return;
 				}
 				var html = '';
-				for (var i = 0; i < flat.length; i++) {
-					var item = flat[i];
+				for (var i = 0; i < flatItems.length; i++) {
+					var item = flatItems[i];
 					var symClass = 'sym-' + (kindNames[item.symbolKind] || 'variable');
 					var codiconChar = kindCodicons[item.symbolKind] || '\\ueb63';
 					var indent = item.depth * 16;
@@ -264,8 +263,15 @@ function getJS(): string {
 				return div.innerHTML;
 			}
 
+			function scrollToCenter(el) {
+				if (!el) return;
+				var ch = outlineList.clientHeight;
+				var ih = el.offsetHeight;
+				outlineList.scrollTop = el.offsetTop - (ch / 2) + (ih / 2);
+			}
+
 			function confirmSelection() {
-				var flat = flattenItems(filteredItems);
+				var flat = flatItems;
 				if (previewIndex < 0 || previewIndex >= flat.length) return;
 				selectedIndex = previewIndex;
 				var item = flat[previewIndex];
@@ -279,7 +285,7 @@ function getJS(): string {
 			}
 
 			function movePreview(index) {
-				var flat = flattenItems(filteredItems);
+				var flat = flatItems;
 				if (flat.length === 0) return;
 				var oldIndex = previewIndex;
 				var newIndex = Math.max(0, Math.min(index, flat.length - 1));
@@ -297,16 +303,12 @@ function getJS(): string {
 				if (newEl) {
 					newEl.classList.add('preview');
 					newEl.classList.remove('unfocused');
-					// 滚动到新位置
-					var containerHeight = outlineList.clientHeight;
-					var itemTop = newEl.offsetTop;
-					var itemHeight = newEl.offsetHeight;
-					outlineList.scrollTop = itemTop - (containerHeight / 2) + (itemHeight / 2);
+					scrollToCenter(newEl);
 				}
 			}
 
 			function enterShortcutMode() {
-				var flat = flattenItems(filteredItems);
+				var flat = flatItems;
 				if (flat.length === 0) return;
 				shortcutMap = {};
 				var count = Math.min(flat.length, SHORTCUT_KEYS.length);
@@ -326,7 +328,7 @@ function getJS(): string {
 			}
 
 			function selectByLine(line) {
-				var flat = flattenItems(filteredItems);
+				var flat = flatItems;
 				if (flat.length === 0) return;
 				var best = 0;
 				for (var i = 0; i < flat.length; i++) {
@@ -351,30 +353,12 @@ function getJS(): string {
 					newEl.classList.add('selected');
 					if (!isOutlineFocused()) { newEl.classList.add('unfocused'); }
 					newEl.classList.add('preview');
-					// 滚动到新位置
-					var containerHeight = outlineList.clientHeight;
-					var itemTop = newEl.offsetTop;
-					var itemHeight = newEl.offsetHeight;
-					outlineList.scrollTop = itemTop - (containerHeight / 2) + (itemHeight / 2);
-				}
-			}
-
-			function scrollToItem(index, attempt) {
-				if (attempt > 10) return;
-				var el = outlineList.querySelector('[data-index="' + index + '"]');
-				if (el) {
-					// 使用 scrollTop 计算直接定位，避免 scrollIntoView 的动画导致整个面板抖动
-					var containerHeight = outlineList.clientHeight;
-					var itemTop = el.offsetTop;
-					var itemHeight = el.offsetHeight;
-					outlineList.scrollTop = itemTop - (containerHeight / 2) + (itemHeight / 2);
-				} else {
-					setTimeout(function() { scrollToItem(index, attempt + 1); }, 50);
+					scrollToCenter(newEl);
 				}
 			}
 
 			function filterItems(query) {
-				if (!query) { filteredItems = allItems; return; }
+				if (!query) { filteredItems = allItems; flatItems = flattenItems(filteredItems); return; }
 				var q = caseSensitive ? query : query.toLowerCase();
 				function matchName(name) {
 					var n = caseSensitive ? name : name.toLowerCase();
@@ -402,6 +386,7 @@ function getJS(): string {
 					return result;
 				}
 				filteredItems = filterRecursive(allItems);
+				flatItems = flattenItems(filteredItems);
 			}
 
 			searchInput.addEventListener('input', function() {
@@ -419,11 +404,22 @@ function getJS(): string {
 				}
 				render();
 				// 滚动到第一项
-				var first = outlineList.querySelector('[data-index="0"]');
-				if (first) {
-					var ch = outlineList.clientHeight;
-					var ih = first.offsetHeight;
-					outlineList.scrollTop = first.offsetTop - (ch / 2) + (ih / 2);
+				scrollToCenter(outlineList.querySelector('[data-index="0"]'));
+			});
+
+			searchInput.addEventListener('blur', function(e) {
+				// 焦点移到 webview 内其他元素时不清除
+				var related = e.relatedTarget;
+				if (related && (outlineList.contains(related) || toggleCase.contains(related) || toggleFuzzy.contains(related) || related === searchInput)) {
+					return;
+				}
+				// 焦点移出 webview，清除搜索内容
+				if (searchInput.value) {
+					searchInput.value = '';
+					filterItems('');
+					previewIndex = -1;
+					render();
+					vscode.postMessage({ type: 'getCursorLine' });
 				}
 			});
 
@@ -441,14 +437,17 @@ function getJS(): string {
 				if (e.key === 'Enter') {
 					e.preventDefault();
 					if (shortcutMode) exitShortcutMode();
-					else { var flat = flattenItems(filteredItems); if (flat.length > 0) enterShortcutMode(); }
+					else {
+						var flat = flatItems;
+						if (flat.length === 1) { confirmSelection(); }
+						else if (flat.length > 1) { enterShortcutMode(); }
+					}
 					return;
 				}
 			});
 
 			outlineList.addEventListener('mousedown', function() { mouseDownOnList = true; });
 			outlineList.addEventListener('focus', function() {
-				isListFocused = true;
 				if (mouseDownOnList) {
 					mouseDownOnList = false;
 					var selected = outlineList.querySelector('.outline-item.selected');
@@ -459,7 +458,6 @@ function getJS(): string {
 				if (!shortcutMode) vscode.postMessage({ type: 'getCursorLine' });
 			});
 			outlineList.addEventListener('blur', function() {
-				isListFocused = false;
 				render(); exitShortcutMode();
 			});
 
@@ -471,13 +469,15 @@ function getJS(): string {
 						var idx = SHORTCUT_KEYS.indexOf(key);
 						if (shortcutMap[idx] !== undefined) {
 							previewIndex = idx; exitShortcutMode(); confirmSelection();
+							// 快捷键选中跳转后清除搜索
+							searchInput.value = ''; filterItems(''); previewIndex = -1;
 						}
 						return;
 					}
 					if (e.key.length === 1) exitShortcutMode();
 				}
 				if (e.target === outlineList || outlineList.contains(e.target)) {
-					var flat = flattenItems(filteredItems);
+					var flat = flatItems;
 					if (flat.length === 0) return;
 					if (e.key === 'ArrowDown') {
 						e.preventDefault(); exitShortcutMode(); lockNav(); movePreview(previewIndex + 1);
@@ -505,7 +505,7 @@ function getJS(): string {
 						filterItems(searchInput.value);
 						if (allItems.length > 0 && lastCursorLine >= 0) {
 							// 设置选中变量，render() 会使用它们
-							var flat = flattenItems(filteredItems);
+							var flat = flatItems;
 							var best = 0;
 							for (var bi = 0; bi < flat.length; bi++) {
 								if (flat[bi].line <= lastCursorLine) { best = bi; } else { break; }
@@ -517,7 +517,12 @@ function getJS(): string {
 						} else {
 							previewIndex = -1; selectedIndex = -1;
 						}
-						render(); break;
+						render();
+						// 滚动到当前选中项
+						if (selectedIndex >= 0) {
+							scrollToCenter(outlineList.querySelector('[data-index="' + selectedIndex + '"]'));
+						}
+						break;
 					case 'cursorLine':
 						if (skipNextCursorLine) { skipNextCursorLine = false; }
 						else { lastCursorLine = message.line; selectByLine(message.line); }
