@@ -2,7 +2,7 @@
   "name": "outline-plus-enhanced",
   "displayName": "Outline Plus",
   "description": "增强的大纲视图：搜索过滤、键盘导航、快捷键跳转、光标实时跟踪",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "publisher": "cxy",
   "license": "MIT",
   "repository": {

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Content-Security-Policy" content="default-src 'none'; font-src {{cspSource}}; style-src {{cspSource}} 'unsafe-inline'; script-src 'nonce-{{nonce}}';">
+	<title>Outline Map</title>
+	<style>
+		@font-face {
+			font-family: 'codicon';
+			font-weight: normal;
+			font-style: normal;
+			src: url('{{codiconUri}}') format('truetype');
+		}
+	</style>
+	<link rel="stylesheet" href="{{cssUri}}">
+</head>
+<body>
+	<div class="search-box">
+		<input type="text" class="search-input" id="searchInput" placeholder="搜索大纲..." data-shortcut="Alt+L" />
+		<button class="search-toggle" id="toggleCase" title="区分大小写">Aa</button>
+		<button class="search-toggle" id="toggleFuzzy" title="模糊匹配">.*</button>
+	</div>
+	<div class="outline-list" id="outlineList" tabindex="0"></div>
+	<script nonce="{{nonce}}" src="{{jsUri}}"></script>
+</body>
+</html>

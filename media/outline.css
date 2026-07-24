@@ -1,0 +1,87 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+	font-family: var(--vscode-font-family);
+	font-size: var(--vscode-font-size);
+	color: var(--vscode-foreground);
+	background: var(--vscode-sideBar-background);
+	padding: 4px 0 0 0;
+	outline: none;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+.search-box {
+	position: sticky; top: 0; z-index: 10;
+	background: var(--vscode-sideBar-background);
+	padding: 0 4px 8px 4px; display: flex; gap: 4px;
+}
+.search-input {
+	flex: 1; padding: 3px 8px;
+	border: 1px solid var(--vscode-input-border, transparent);
+	background: var(--vscode-input-background);
+	color: var(--vscode-input-foreground);
+	border-radius: 2px; outline: none;
+	font-size: inherit; font-family: inherit;
+}
+.search-input:focus { border-color: var(--vscode-focusBorder); }
+.search-toggle {
+	display: flex; align-items: center; justify-content: center;
+	width: 24px; height: 24px;
+	border: 1px solid var(--vscode-input-border, transparent);
+	border-radius: 2px; background: var(--vscode-input-background);
+	color: var(--vscode-descriptionForeground);
+	cursor: pointer; font-size: 11px; font-family: inherit;
+	flex-shrink: 0; user-select: none;
+}
+.search-toggle:hover { background: var(--vscode-list-hoverBackground); }
+.search-toggle.active {
+	background: var(--vscode-inputOption-activeBackground);
+	color: var(--vscode-inputOption-activeForeground);
+	border-color: var(--vscode-inputOption-activeBorder);
+}
+.outline-list { overflow-y: auto; flex: 1; outline: none; }
+.outline-list:focus .outline-item.selected { border-left: 2px solid var(--vscode-focusBorder); }
+.outline-item {
+	display: flex; align-items: center; padding: 2px 4px;
+	cursor: pointer; border-radius: 2px; border-left: 2px solid transparent;
+	white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 22px;
+}
+.outline-item:hover { background: var(--vscode-list-hoverBackground); }
+.outline-item.selected { background: var(--vscode-list-activeSelectionBackground); }
+.outline-item.preview { background: var(--vscode-list-hoverBackground); border-left: 2px solid var(--vscode-focusBorder); }
+.outline-item.selected.preview { background: var(--vscode-list-activeSelectionBackground); }
+.outline-item.selected.unfocused { background: var(--vscode-list-inactiveSelectionBackground); }
+.shortcut-label {
+	margin-left: 4px; padding: 0 4px; border-radius: 2px;
+	background: var(--vscode-badge-background); color: var(--vscode-badge-foreground);
+	font-size: 11px; line-height: 18px; flex-shrink: 0; min-width: 18px; text-align: center;
+}
+.outline-item .codicon {
+	font-family: 'codicon'; font-size: 16px; font-style: normal; font-weight: normal;
+	margin-right: 6px; flex-shrink: 0; width: 16px; height: 16px;
+	display: flex; align-items: center; justify-content: center;
+	text-rendering: auto; -webkit-font-smoothing: antialiased;
+}
+.sym-file { color: #4fc1ff; } .sym-module { color: #4fc1ff; }
+.sym-namespace { color: #4fc1ff; } .sym-package { color: #4fc1ff; }
+.sym-class { color: #dcdcaa; } .sym-method { color: #c586c0; }
+.sym-property { color: #9cdcfe; } .sym-field { color: #9cdcfe; }
+.sym-constructor { color: #dcdcaa; } .sym-enum { color: #4ec9b0; }
+.sym-interface { color: #4ec9b0; } .sym-function { color: #dcdcaa; }
+.sym-variable { color: #9cdcfe; } .sym-constant { color: #4fc1ff; }
+.sym-string { color: #ce9178; } .sym-number { color: #b5cea8; }
+.sym-boolean { color: #569cd6; } .sym-array { color: #4ec9b0; }
+.sym-object { color: #dcdcaa; } .sym-key { color: #9cdcfe; }
+.sym-null { color: #569cd6; } .sym-enum-member { color: #4fc1ff; }
+.sym-struct { color: #4ec9b0; } .sym-event { color: #dcdcaa; }
+.sym-operator { color: #d4d4d4; } .sym-type-parameter { color: #4ec9b0; }
+.outline-item .name { overflow: hidden; text-overflow: ellipsis; }
+.empty-state { text-align: center; color: var(--vscode-descriptionForeground); padding: 20px 0; }
+.loading-state { text-align: center; color: var(--vscode-descriptionForeground); padding: 20px 0; }
+.loading-spinner {
+	display: inline-block; width: 16px; height: 16px;
+	border: 2px solid var(--vscode-descriptionForeground);
+	border-top-color: transparent; border-radius: 50%;
+	animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 6px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
