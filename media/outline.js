@@ -392,10 +392,12 @@ document.addEventListener('keydown', function(e) {
 					previewIndex = -1; selectedIndex = -1;
 				}
 				render();
-				// 滚动到当前选中项
-				if (selectedIndex >= 0) {
-					scrollToCenter(outlineList.querySelector('[data-index="' + selectedIndex + '"]'));
-				}
+				// 延迟滚动，确保在所有同步 render() 完成后执行
+				requestAnimationFrame(function() {
+					if (selectedIndex >= 0) {
+						scrollToCenter(outlineList.querySelector('[data-index="' + selectedIndex + '"]'));
+					}
+				});
 				break;
 			case 'cursorLine':
                                 if (skipNextCursorLine) { skipNextCursorLine = false; }
