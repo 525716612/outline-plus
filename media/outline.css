@@ -56,6 +56,11 @@ body {
 	background: var(--vscode-badge-background); color: var(--vscode-badge-foreground);
 	font-size: 11px; line-height: 18px; flex-shrink: 0; min-width: 18px; text-align: center;
 }
+.decl-badge {
+	margin-left: 6px;
+	font-size: inherit;
+	color: var(--vscode-list-deemphasizedForeground, #8c8c8c);
+}
 .outline-item .codicon {
 	font-family: 'codicon'; font-size: 16px; font-style: normal; font-weight: normal;
 	margin-right: 6px; flex-shrink: 0; width: 16px; height: 16px;

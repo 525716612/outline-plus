@@ -100,6 +100,9 @@
 			html += '<div class="' + cls + '" data-index="' + i + '" data-line="' + item.line + '" data-uri="' + item.uri + '" style="padding-left:' + (4 + indent) + 'px;">';
 			html += '<span class="codicon ' + symClass + '">' + codiconChar + '</span>';
 			html += '<span class="name">' + escapeHtml(item.name) + '</span>';
+			if (item.isDeclaration) {
+				html += '<span class="decl-badge">声明</span>';
+			}
 			if (shortcutMode && shortcutMap[i] !== undefined) {
 				html += '<span class="shortcut-label">' + shortcutMap[i] + '</span>';
 			}

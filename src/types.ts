@@ -12,4 +12,6 @@ export interface OutlineItem {
 	nameEndChar: number;
 	uri: string;
 	children: OutlineItem[];
+	/** 是否为声明（而非定义/实现），仅对 function/method 有意义 */
+	isDeclaration?: boolean;
 }

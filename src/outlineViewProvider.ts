@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { OutlineItem } from './types';
 import { getWebviewContent } from './webviewContent';
+import { isDeclaration } from './declarationDetector';
 
 const FOCUS_SEARCH_COMMAND = 'outline-plus.focusSearch';
 
@@ -229,7 +230,7 @@ export class OutlineViewProvider implements vscode.WebviewViewProvider {
 			this._cancelFallback();
 			this._sendLoading(false);
 			this._outlineItems = symbols.map((sym, index) =>
-				this._convertSymbol(sym, index, uriStr)
+				this._convertSymbol(sym, index, uriStr, editor.document)
 			);
 			this._sendOutline(this._outlineItems);
 			return;
@@ -261,7 +262,7 @@ export class OutlineViewProvider implements vscode.WebviewViewProvider {
 			if (symbols && symbols.length > 0) {
 				this._sendLoading(false);
 				this._outlineItems = symbols.map((sym, index) =>
-					this._convertSymbol(sym, index, editor.document.uri.toString())
+					this._convertSymbol(sym, index, editor.document.uri.toString(), editor.document)
 				);
 				this._sendOutline(this._outlineItems);
 				return;
@@ -282,7 +283,14 @@ export class OutlineViewProvider implements vscode.WebviewViewProvider {
 		}
 	}
 
-	private _convertSymbol(symbol: vscode.DocumentSymbol, id: number, uri: string): OutlineItem {
+	private _convertSymbol(symbol: vscode.DocumentSymbol, id: number, uri: string, document?: vscode.TextDocument): OutlineItem {
+		// 通过声明检测器判断（按语言注册，见 declarationDetector.ts）
+		const declResult = document && (symbol.kind === vscode.SymbolKind.Function ||
+			symbol.kind === vscode.SymbolKind.Method ||
+			symbol.kind === vscode.SymbolKind.Constructor)
+			? isDeclaration(symbol, document)
+			: undefined;
+
 		return {
 			id: `${id}`,
 			name: symbol.name,
@@ -294,8 +302,9 @@ export class OutlineViewProvider implements vscode.WebviewViewProvider {
 			nameEndChar: symbol.selectionRange.end.character,
 			uri: uri,
 			children: symbol.children.map((child, i) =>
-				this._convertSymbol(child, id * 100 + i, uri)
-			)
+				this._convertSymbol(child, id * 100 + i, uri, document)
+			),
+			isDeclaration: declResult
 		};
 	}
 
